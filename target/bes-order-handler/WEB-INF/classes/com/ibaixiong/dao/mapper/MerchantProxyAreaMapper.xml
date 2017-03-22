@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ibaixiong.dao.MerchantProxyAreaDao" >
+  <resultMap id="BaseResultMap" type="com.ibaixiong.entity.MerchantProxyArea" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="admin_id" property="adminId" jdbcType="BIGINT" />
+    <result column="merchant_id" property="merchantId" jdbcType="BIGINT" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="update_date_time" property="updateDateTime" jdbcType="TIMESTAMP" />
+    <result column="area_code" property="areaCode" jdbcType="BIGINT" />
+    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+    <result column="merchant_level" property="merchantLevel" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, admin_id, merchant_id, create_date_time, update_date_time, area_code, area_name, 
+    merchant_level
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_merchant_proxy_area
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectAreaByCode" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  	select 
+    <include refid="Base_Column_List" />
+    from tbl_merchant_proxy_area
+    where area_code = #{areaCode,jdbcType=BIGINT}
+  </select>
+  
+  <select id="queryAreaByMerchantId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+  	select 
+    <include refid="Base_Column_List" />
+    from tbl_merchant_proxy_area
+    where merchant_id = #{merchantId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteAreaByCityIdAndCode">
+  	delete from tbl_merchant_proxy_area
+    where merchant_id = #{merchantId,jdbcType=BIGINT} and area_code = #{areaCode,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteAreaByCityId">
+  	delete from tbl_merchant_proxy_area
+    where merchant_id = #{merchantId,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_merchant_proxy_area
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ibaixiong.entity.MerchantProxyArea" >
+    insert into tbl_merchant_proxy_area (id, admin_id, merchant_id, 
+      create_date_time, update_date_time, area_code, 
+      area_name, merchant_level)
+    values (#{id,jdbcType=BIGINT}, #{adminId,jdbcType=BIGINT}, #{merchantId,jdbcType=BIGINT}, 
+      #{createDateTime,jdbcType=TIMESTAMP}, #{updateDateTime,jdbcType=TIMESTAMP}, #{areaCode,jdbcType=BIGINT}, 
+      #{areaName,jdbcType=VARCHAR}, #{merchantLevel,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ibaixiong.entity.MerchantProxyArea" >
+    insert into tbl_merchant_proxy_area
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+      <if test="merchantId != null" >
+        merchant_id,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="updateDateTime != null" >
+        update_date_time,
+      </if>
+      <if test="areaCode != null" >
+        area_code,
+      </if>
+      <if test="areaName != null" >
+        area_name,
+      </if>
+      <if test="merchantLevel != null" >
+        merchant_level,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=BIGINT},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=BIGINT},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDateTime != null" >
+        #{updateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=BIGINT},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantLevel != null" >
+        #{merchantLevel,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ibaixiong.entity.MerchantProxyArea" >
+    update tbl_merchant_proxy_area
+    <set >
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=BIGINT},
+      </if>
+      <if test="merchantId != null" >
+        merchant_id = #{merchantId,jdbcType=BIGINT},
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDateTime != null" >
+        update_date_time = #{updateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="areaCode != null" >
+        area_code = #{areaCode,jdbcType=BIGINT},
+      </if>
+      <if test="areaName != null" >
+        area_name = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantLevel != null" >
+        merchant_level = #{merchantLevel,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ibaixiong.entity.MerchantProxyArea" >
+    update tbl_merchant_proxy_area
+    set admin_id = #{adminId,jdbcType=BIGINT},
+      merchant_id = #{merchantId,jdbcType=BIGINT},
+      create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      update_date_time = #{updateDateTime,jdbcType=TIMESTAMP},
+      area_code = #{areaCode,jdbcType=BIGINT},
+      area_name = #{areaName,jdbcType=VARCHAR},
+      merchant_level = #{merchantLevel,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

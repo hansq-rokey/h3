@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: bes-order-handler
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: com.ibaixiong.com
+Build-Jdk: 1.7.0_79
+Built-By: hansq
+Created-By: Maven Integration for Eclipse
+Implementation-Build: 
+

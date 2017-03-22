@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ibaixiong.dao.ErpPurchaseMaterialDao" >
+  <resultMap id="BaseResultMap" type="com.ibaixiong.entity.ErpPurchaseMaterial" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="invalid" property="invalid" jdbcType="TINYINT" />
+    <result column="serial_number" property="serialNumber" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="model" property="model" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="Purchase_date" property="purchaseDate" jdbcType="DATE" />
+    <result column="arrival_date" property="arrivalDate" jdbcType="DATE" />
+    <result column="remark" property="remark" jdbcType="CHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="REAL" />
+    <result column="coefficient" property="coefficient" jdbcType="REAL" />
+    <result column="calculate_model" property="calculateModel" jdbcType="TINYINT" />
+    <result column="purchase_price" property="purchasePrice" jdbcType="REAL" />
+    <result column="factory_price" property="factoryPrice" jdbcType="REAL" /> 
+    <association column="admin_id" property="admin" select="com.ibaixiong.erp.dao.sys.SysAdminDao.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_date_time, update_time, status, invalid, serial_number, name, model, num, 
+    Purchase_date, arrival_date, remark, admin_id, unit, price, coefficient, calculate_model,purchase_price,factory_price
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_erp_purchase_material
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="getList" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_erp_purchase_material
+    where invalid=0 order by create_date_time desc
+  </select>
+  
+    <select id="queryPurchaseMaterials" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    	pum.id,
+    	pum.unit,
+    	pum.price,
+    	pum.coefficient,
+    	pum.name,
+    	pum.calculate_model,
+    	pum.serial_number,
+    	pum.model,
+    	pum.factory_price
+    from 
+    	tbl_erp_purchase_material pum
+    left join 
+    	tbl_erp_format_material_relation fmr on pum.id = fmr.material_id
+    where 
+    	fmr.format_id = #{formatId,jdbcType=BIGINT}
+  </select>
+  
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    update tbl_erp_purchase_material set invalid=1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insert" parameterType="com.ibaixiong.entity.ErpPurchaseMaterial" >
+    insert into tbl_erp_purchase_material (id, create_date_time, update_time, 
+      status, invalid, serial_number, 
+      name, model, num, Purchase_date, 
+      arrival_date, remark, admin_id, unit, price, coefficient, calculate_model,purchase_price,factory_price
+      )
+    values (#{id,jdbcType=BIGINT}, #{createDateTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=TINYINT}, #{invalid,jdbcType=TINYINT}, #{serialNumber,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, #{purchaseDate,jdbcType=DATE}, 
+      #{arrivalDate,jdbcType=DATE}, #{remark,jdbcType=CHAR}, #{adminId,jdbcType=BIGINT},
+      #{unit,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, #{coefficient,jdbcType=REAL}, 
+      #{calculateModel,jdbcType=TINYINT},#{purchasePrice,jdbcType=REAL},#{factoryPrice,jdbcType=REAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ibaixiong.entity.ErpPurchaseMaterial" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_erp_purchase_material
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="invalid != null" >
+        invalid,
+      </if>
+      <if test="serialNumber != null" >
+        serial_number,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="model != null" >
+        model,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="purchaseDate != null" >
+        Purchase_date,
+      </if>
+      <if test="arrivalDate != null" >
+        arrival_date,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="admin != null" >
+        admin_id,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="coefficient != null" >
+        coefficient,
+      </if>
+      <if test="calculateModel != null" >
+        calculate_model,
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price,
+      </if>
+      <if test="factoryPrice != null" >
+        factory_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="invalid != null" >
+        #{invalid,jdbcType=TINYINT},
+      </if>
+      <if test="serialNumber != null" >
+        #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseDate != null" >
+        #{purchaseDate,jdbcType=DATE},
+      </if>
+      <if test="arrivalDate != null" >
+        #{arrivalDate,jdbcType=DATE},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=CHAR},
+      </if>
+      <if test="admin != null" >
+        #{admin.id,jdbcType=BIGINT},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="coefficient != null" >
+        #{coefficient,jdbcType=REAL},
+      </if>
+      <if test="calculateModel != null" >
+        #{calculateModel,jdbcType=TINYINT},
+      </if>
+      <if test="purchasePrice != null" >
+        #{purchasePrice,jdbcType=REAL},
+      </if>
+      <if test="factoryPrice != null" >
+        #{factoryPrice,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ibaixiong.entity.ErpPurchaseMaterial" >
+    update tbl_erp_purchase_material
+    <set >
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="invalid != null" >
+        invalid = #{invalid,jdbcType=TINYINT},
+      </if>
+      <if test="serialNumber != null" >
+        serial_number = #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseDate != null" >
+        Purchase_date = #{purchaseDate,jdbcType=DATE},
+      </if>
+      <if test="arrivalDate != null" >
+        arrival_date = #{arrivalDate,jdbcType=DATE},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=CHAR},
+      </if>
+      <if test="admin != null" >
+        admin_id = #{admin.id,jdbcType=BIGINT},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="coefficient != null" >
+        coefficient = #{coefficient,jdbcType=REAL},
+      </if>
+      <if test="calculateModel != null" >
+        calculate_model = #{calculateModel,jdbcType=TINYINT},
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price = #{purchasePrice,jdbcType=REAL},
+      </if>
+      <if test="factoryPrice != null" >
+        factory_price = #{factoryPrice,jdbcType=REAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ibaixiong.entity.ErpPurchaseMaterial" >
+    update tbl_erp_purchase_material
+    set create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      invalid = #{invalid,jdbcType=TINYINT},
+      serial_number = #{serialNumber,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      model = #{model,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      Purchase_date = #{purchaseDate,jdbcType=DATE},
+      arrival_date = #{arrivalDate,jdbcType=DATE},
+      remark = #{remark,jdbcType=CHAR},
+      admin_id = #{adminId,jdbcType=BIGINT},
+      unit = #{unit,jdbcType=VARCHAR},
+      price = #{price,jdbcType=REAL},
+      coefficient = #{coefficient,jdbcType=REAL},
+      calculate_model = #{calculateModel,jdbcType=TINYINT}
+      purchase_price = #{purchasePrice,jdbcType=REAL},
+      factory_price = #{factoryPrice,jdbcType=REAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

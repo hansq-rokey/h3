@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="bes-activemq">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
+        <dependent-module archiveName="papabear-pay-api-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/papabear-pay-api/papabear-pay-api">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="papabear-pay-entity-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/papabear-pay-entity/papabear-pay-entity">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="papabear-product-api-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/papabear-product-api/papabear-product-api">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="papabear-product-entity-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/papabear-product-entity/papabear-product-entity">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="papabear-commons-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/papabear-commons/papabear-commons">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="papabear-order-api-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/papabear-order-api/papabear-order-api">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="papabear-order-entity-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/papabear-order-entity/papabear-order-entity">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="bes-module-entity-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/bes-module-entity/bes-module-entity">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="bes-module-utils-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/bes-module-utils/bes-module-utils">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="bes-order-handler"/>
+        <property name="java-output-path" value="/bes-activemq/target/classes"/>
+    </wb-module>
+</project-modules>

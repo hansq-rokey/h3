@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 查找�?��的schemaLocation 访问 http://www.springframework.org/schema/ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd   
+        http://www.springframework.org/schema/context   
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+        http://activemq.apache.org/schema/core
+        http://activemq.apache.org/schema/core/activemq-core-5.9.0.xsd">
+     
+     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+     
+	<!-- 采用注释的方式配置bean -->
+	<context:annotation-config />
+     
+     <!-- 配置扫描路径 -->
+     <context:component-scan base-package="com.ibaixiong">
+     	<!-- 只扫描Service，也可以添加Repostory，但是要把Controller排除在外，Controller由spring-mvc.xml去加�?-->
+     	<!-- <context:include-filter type="annotation" expression="org.springframework.stereotype.Service" /> -->
+     	<!-- <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" /> -->
+     	<!-- <context:include-filter type="annotation" expression="org.springframework.stereotype.Component" /> -->
+     	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+     </context:component-scan>
+     
+
+	
+	<bean
+		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:*.properties</value>
+			</list>
+		</property>
+		<property name="fileEncoding" value="utf-8" />
+	</bean>
+
+	<!-- 数据源BoneCP连接�?-->
+	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}" />     <!--�?��数据库连接池中空闲连接的间隔时间，单位是分，默认值：240，如果要取消则设置为0 -->
+		<property name="idleMaxAge" value="${jdbc.idleMaxAge}" />				  				  <!--连接池中未使用的链接�?��存活时间，单位是分，默认值：60，如果要永远存活设置�? -->
+		<property name="maxConnectionsPerPartition" value="${jdbc.maxConnectionsPerPartition}" /> <!--每个分区�?��的连接数 -->
+		<property name="minConnectionsPerPartition" value="${jdbc.minConnectionsPerPartition}" /> <!--每个分区�?��的连接数 -->
+		<property name="partitionCount" value="${jdbc.partitionCount}" />			  			  <!--分区数，默认�?，最�?，推�?-4，视应用而定 -->
+		<property name="acquireIncrement" value="${jdbc.acquireIncrement}" />			  		  <!-- 当连接池中的连接耗尽的时候一次同时获取的连接数�?Default: 1 -->
+		<property name="statementsCacheSize" value="${jdbc.statementsCacheSize}" />		  	      <!--缓存prepared statements的大小，默认值：0 -->
+		<property name="releaseHelperThreads" value="${jdbc.releaseHelperThreads}" />		  	  <!--每个分区释放链接助理进程的数量，默认值：3 -->
+	</bean>
+
+
+	<!-- MyBatis配置 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- <property name="configLocation"	value="classpath:com/ibaixiong/mall/dao/mapper/Configuration.xml" /> -->
+		<property name="mapperLocations" value="classpath:com/ibaixiong/dao/mapper/*Mapper.xml" />
+	</bean>
+
+	<!-- 将basePackage下的interface，转换为spring bean,service中可以直�?注入使用 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+		<property name="basePackage" value="com.ibaixiong.dao"></property>
+	</bean>
+
+	<!-- 事务管理器配�? 使用jdbc事务 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 使用annotation定义事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+	
+	<import resource="classpath:spring/dubbo.xml" />
+	
+	<import resource="classpath*:spring/redis.xml" />
+	
+	<import resource="classpath*:spring/ActiveMQ.xml"/>
+	
+	<bean id="redisObjectUtils" class="com.papabear.commons.redis.RedisObjectUtils" />
+</beans>  

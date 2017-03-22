@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ibaixiong.dao.DictCodeDao" >
+  <resultMap id="BaseResultMap" type="com.ibaixiong.entity.DictCode" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="dict_type" property="dictType" jdbcType="VARCHAR" />
+    <result column="dict_name" property="dictName" jdbcType="VARCHAR" />
+    <result column="dict_code_name" property="dictCodeName" jdbcType="VARCHAR" />
+    <result column="dict_code_value" property="dictCodeValue" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="admin_id" property="adminId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="is_display" property="isDisplay" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, dict_type, dict_name, dict_code_name, dict_code_value, sort, create_date_time, 
+    update_time, admin_id, status, type, is_display
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_dict_code
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="queryDictCodeByDictType" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_dict_code
+    where dict_type = #{dictType,jdbcType=VARCHAR} order by sort 
+  </select>
+  <select id="queryDictCodeList" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_dict_code
+    <where>
+    	<if test="dictType!=null">
+    		dict_type = #{dictType,jdbcType=VARCHAR}
+    	</if>
+    	<if test="type!=null">
+    		and type = #{type,jdbcType=TINYINT}
+    	</if>
+    	<if test="isDisplay!=null">
+    		and is_display = #{isDisplay,jdbcType=TINYINT}
+    	</if>
+    </where>
+    order by sort
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_dict_code
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ibaixiong.entity.DictCode" >
+    insert into tbl_dict_code (id, dict_type, dict_name, 
+      dict_code_name, dict_code_value, sort, 
+      create_date_time, update_time, admin_id, 
+      status,type,is_display)
+    values (#{id,jdbcType=BIGINT}, #{dictType,jdbcType=VARCHAR}, #{dictName,jdbcType=VARCHAR}, 
+      #{dictCodeName,jdbcType=VARCHAR}, #{dictCodeValue,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, 
+      #{createDateTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{adminId,jdbcType=BIGINT}, 
+      #{status,jdbcType=TINYINT},#{type,jdbcType=TINYINT},#{isDisplay,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ibaixiong.entity.DictCode" >
+    insert into tbl_dict_code
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="dictType != null" >
+        dict_type,
+      </if>
+      <if test="dictName != null" >
+        dict_name,
+      </if>
+      <if test="dictCodeName != null" >
+        dict_code_name,
+      </if>
+      <if test="dictCodeValue != null" >
+        dict_code_value,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+       <if test="isDisplay != null" >
+        is_display,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="dictType != null" >
+        #{dictType,jdbcType=VARCHAR},
+      </if>
+      <if test="dictName != null" >
+        #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="dictCodeName != null" >
+        #{dictCodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="dictCodeValue != null" >
+        #{dictCodeValue,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="isDisplay != null" >
+        #{isDisplay,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ibaixiong.entity.DictCode" >
+    update tbl_dict_code
+    <set >
+      <if test="dictType != null" >
+        dict_type = #{dictType,jdbcType=VARCHAR},
+      </if>
+      <if test="dictName != null" >
+        dict_name = #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="dictCodeName != null" >
+        dict_code_name = #{dictCodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="dictCodeValue != null" >
+        dict_code_value = #{dictCodeValue,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="isDisplay != null" >
+        is_display = #{isDisplay,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ibaixiong.entity.DictCode" >
+    update tbl_dict_code
+    set dict_type = #{dictType,jdbcType=VARCHAR},
+      dict_name = #{dictName,jdbcType=VARCHAR},
+      dict_code_name = #{dictCodeName,jdbcType=VARCHAR},
+      dict_code_value = #{dictCodeValue,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      admin_id = #{adminId,jdbcType=BIGINT},
+      status = #{status,jdbcType=TINYINT},
+      type = #{type,jdbcType=TINYINT},
+      is_display = #{isDisplay,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

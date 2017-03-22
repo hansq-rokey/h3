@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ibaixiong.dao.SsssOrderDao" >
+  <resultMap id="BaseResultMap" type="com.ibaixiong.entity.SsssOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="invalid" property="invalid" jdbcType="TINYINT" />
+    <result column="order_number" property="orderNumber" jdbcType="VARCHAR" />
+    <result column="ssss_id" property="ssssId" jdbcType="BIGINT" />
+    <result column="merchant_id" property="merchantId" jdbcType="BIGINT" />
+    <result column="order_type" property="orderType" jdbcType="TINYINT" />
+    <result column="profit" property="profit" jdbcType="REAL" />
+    <result column="source" property="source" jdbcType="TINYINT" />
+    <result column="order_total_money" property="orderTotalMoney" jdbcType="REAL" />
+    <result column="order_num" property="orderNum" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_date_time, update_time, status, invalid, order_number, ssss_id, merchant_id, 
+    order_type, profit,source,order_total_money,order_num
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_ssss_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="getOrderByNumber" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_ssss_order
+    where order_number = #{number,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_ssss_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ibaixiong.entity.SsssOrder" >
+    insert into tbl_ssss_order (id, create_date_time, update_time, 
+      status, invalid, order_number, 
+      ssss_id, merchant_id, order_type, 
+      profit,source,order_total_money,order_num)
+    values (#{id,jdbcType=BIGINT}, #{createDateTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=TINYINT}, #{invalid,jdbcType=TINYINT}, #{orderNumber,jdbcType=VARCHAR}, 
+      #{ssssId,jdbcType=BIGINT}, #{merchantId,jdbcType=BIGINT}, #{orderType,jdbcType=TINYINT}, 
+      #{profit,jdbcType=REAL},#{source,jdbcType=TINYINT},
+      #{orderTotalMoney,jdbcType=REAL},#{orderNum,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ibaixiong.entity.SsssOrder" >
+    insert into tbl_ssss_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="invalid != null" >
+        invalid,
+      </if>
+      <if test="orderNumber != null" >
+        order_number,
+      </if>
+      <if test="ssssId != null" >
+        ssss_id,
+      </if>
+      <if test="merchantId != null" >
+        merchant_id,
+      </if>
+      <if test="orderType != null" >
+        order_type,
+      </if>
+      <if test="profit != null" >
+        profit,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="orderTotalMoney != null" >
+        order_total_money,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="invalid != null" >
+        #{invalid,jdbcType=TINYINT},
+      </if>
+      <if test="orderNumber != null" >
+        #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="ssssId != null" >
+        #{ssssId,jdbcType=BIGINT},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=BIGINT},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=TINYINT},
+      </if>
+      <if test="profit != null" >
+        #{profit,jdbcType=REAL},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=TINYINT},
+      </if>
+      <if test="orderTotalMoney != null" >
+        #{orderTotalMoney,jdbcType=REAL},
+      </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ibaixiong.entity.SsssOrder" >
+    update tbl_ssss_order
+    <set >
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="invalid != null" >
+        invalid = #{invalid,jdbcType=TINYINT},
+      </if>
+      <if test="orderNumber != null" >
+        order_number = #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="ssssId != null" >
+        ssss_id = #{ssssId,jdbcType=BIGINT},
+      </if>
+      <if test="merchantId != null" >
+        merchant_id = #{merchantId,jdbcType=BIGINT},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=TINYINT},
+      </if>
+      <if test="profit != null" >
+        profit = #{profit,jdbcType=REAL},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=TINYINT},
+      </if>
+      <if test="orderTotalMoney != null" >
+        order_total_money = #{orderTotalMoney,jdbcType=REAL},
+      </if>
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=REAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ibaixiong.entity.SsssOrder" >
+    update tbl_ssss_order
+    set create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      invalid = #{invalid,jdbcType=TINYINT},
+      order_number = #{orderNumber,jdbcType=VARCHAR},
+      ssss_id = #{ssssId,jdbcType=BIGINT},
+      merchant_id = #{merchantId,jdbcType=BIGINT},
+      order_type = #{orderType,jdbcType=TINYINT},
+      profit = #{profit,jdbcType=REAL},
+      source = #{source,jdbcType=TINYINT},
+      order_total_money = #{orderTotalMoney,jdbcType=REAL},
+      order_num = #{orderNum,jdbcType=REAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

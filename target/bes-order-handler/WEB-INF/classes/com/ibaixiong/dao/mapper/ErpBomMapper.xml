@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ibaixiong.dao.ErpBomDao" >
+  <resultMap id="BaseResultMap" type="com.ibaixiong.entity.ErpBom" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="invalid" property="invalid" jdbcType="TINYINT" />
+    <result column="purchase_material_id" property="purchaseMaterialId" jdbcType="BIGINT" />
+    <result column="serial_number" property="serialNumber" jdbcType="CHAR" />
+    <result column="material_name" property="materialName" jdbcType="VARCHAR" />
+    <result column="material_model" property="materialModel" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="REAL" />
+    <result column="remark" property="remark" jdbcType="CHAR" />
+    <result column="bom_number" property="bomNumber" jdbcType="CHAR" />
+    <result column="order_number" property="orderNumber" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_date_time, update_time, status, invalid, purchase_material_id, serial_number, 
+    material_name, material_model, unit, num, remark, bom_number,order_number
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_erp_bom
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="getListByOrderNumber" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_erp_bom
+    where invalid=0 and order_number=#{orderNumber,jdbcType=VARCHAR} order by create_date_time desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_erp_bom
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ibaixiong.entity.ErpBom" >
+    insert into tbl_erp_bom (id, create_date_time, update_time, 
+      status, invalid, purchase_material_id, 
+      serial_number, material_name, material_model, 
+      unit, num, remark, bom_number,order_number
+      )
+    values (#{id,jdbcType=BIGINT}, #{createDateTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=TINYINT}, #{invalid,jdbcType=TINYINT}, #{purchaseMaterialId,jdbcType=BIGINT}, 
+      #{serialNumber,jdbcType=CHAR}, #{materialName,jdbcType=VARCHAR}, #{materialModel,jdbcType=VARCHAR}, 
+      #{unit,jdbcType=VARCHAR}, #{num,jdbcType=REAL}, #{remark,jdbcType=CHAR}, #{bomNumber,jdbcType=CHAR},
+      #{orderNumber,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ibaixiong.entity.ErpBom" >
+    insert into tbl_erp_bom
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="invalid != null" >
+        invalid,
+      </if>
+      <if test="purchaseMaterialId != null" >
+        purchase_material_id,
+      </if>
+      <if test="serialNumber != null" >
+        serial_number,
+      </if>
+      <if test="materialName != null" >
+        material_name,
+      </if>
+      <if test="materialModel != null" >
+        material_model,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="bomNumber != null" >
+        bom_number,
+      </if>
+      <if test="orderNumber != null" >
+        order_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="invalid != null" >
+        #{invalid,jdbcType=TINYINT},
+      </if>
+      <if test="purchaseMaterialId != null" >
+        #{purchaseMaterialId,jdbcType=BIGINT},
+      </if>
+      <if test="serialNumber != null" >
+        #{serialNumber,jdbcType=CHAR},
+      </if>
+      <if test="materialName != null" >
+        #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="materialModel != null" >
+        #{materialModel,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=REAL},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=CHAR},
+      </if>
+      <if test="bomNumber != null" >
+        #{bomNumber,jdbcType=CHAR},
+      </if>
+      <if test="orderNumber != null" >
+        #{orderNumber,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ibaixiong.entity.ErpBom" >
+    update tbl_erp_bom
+    <set >
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="invalid != null" >
+        invalid = #{invalid,jdbcType=TINYINT},
+      </if>
+      <if test="purchaseMaterialId != null" >
+        purchase_material_id = #{purchaseMaterialId,jdbcType=BIGINT},
+      </if>
+      <if test="serialNumber != null" >
+        serial_number = #{serialNumber,jdbcType=CHAR},
+      </if>
+      <if test="materialName != null" >
+        material_name = #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="materialModel != null" >
+        material_model = #{materialModel,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=REAL},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=CHAR},
+      </if>
+      <if test="bomNumber != null" >
+        bom_number = #{bomNumber,jdbcType=CHAR},
+      </if>
+       <if test="orderNumber != null" >
+        order_number = #{orderNumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ibaixiong.entity.ErpBom" >
+    update tbl_erp_bom
+    set create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      invalid = #{invalid,jdbcType=TINYINT},
+      purchase_material_id = #{purchaseMaterialId,jdbcType=BIGINT},
+      serial_number = #{serialNumber,jdbcType=CHAR},
+      material_name = #{materialName,jdbcType=VARCHAR},
+      material_model = #{materialModel,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      num = #{num,jdbcType=REAL},
+      remark = #{remark,jdbcType=CHAR},
+      bom_number = #{bomNumber,jdbcType=CHAR},
+      order_number = #{orderNumber,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

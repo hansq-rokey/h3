@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ibaixiong.dao.SsssCityMerchantDao" >
+  <resultMap id="BaseResultMap" type="com.ibaixiong.entity.SsssCityMerchant" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="merchant_number" property="merchantNumber" jdbcType="VARCHAR" />
+    <result column="parent_city_merchant_id" property="parentCityMerchantId" jdbcType="BIGINT" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="invalid" property="invalid" jdbcType="TINYINT" />
+    <result column="admin_id" property="adminId" jdbcType="BIGINT" />
+    <result column="city_merchant_name" property="cityMerchantName" jdbcType="VARCHAR" />
+    <result column="city_merchant_address" property="cityMerchantAddress" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="bank_number" property="bankNumber" jdbcType="VARCHAR" />
+    <result column="bank_address" property="bankAddress" jdbcType="VARCHAR" />
+    <result column="link_man" property="linkMan" jdbcType="VARCHAR" />
+    <result column="identity_card" property="identityCard" jdbcType="VARCHAR" />
+    <result column="link_tel" property="linkTel" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="money" property="money" jdbcType="REAL" />
+    <result column="lowest_money" property="lowestMoney" jdbcType="REAL" />
+    <result column="level" property="level" jdbcType="TINYINT" />
+    <result column="freezed_money" property="freezedMoney" jdbcType="REAL" />
+
+    <result column="area_profit" property="areaProfit" jdbcType="REAL" />
+    <result column="fixate_profit" property="fixateProfit" jdbcType="REAL" />
+    <result column="first_goods_money" property="firstGoodsMoney" jdbcType="REAL" />
+    <result column="first_goods_money_balance" property="firstGoodsMoneyBalance" jdbcType="REAL" />
+    
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, merchant_number, parent_city_merchant_id, create_date_time, update_time, status, 
+    invalid, admin_id, city_merchant_name, city_merchant_address, bank_name, bank_number, 
+    bank_address, link_man, identity_card, link_tel, user_id, money, lowest_money, level,freezed_money,
+    area_profit,fixate_profit,first_goods_money,first_goods_money_balance
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_ssss_city_merchant
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+   <select id="getByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_ssss_city_merchant
+    where user_id = #{userId,jdbcType=BIGINT} and invalid=0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_ssss_city_merchant
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ibaixiong.entity.SsssCityMerchant" >
+    insert into tbl_ssss_city_merchant (id, merchant_number, parent_city_merchant_id, 
+      create_date_time, update_time, status, 
+      invalid, admin_id, city_merchant_name, 
+      city_merchant_address, bank_name, bank_number, 
+      bank_address, link_man, identity_card, 
+      link_tel, user_id, money, 
+      lowest_money, level,area_profit,area_profit,
+      first_goods_money,first_goods_money_balance)
+    values (#{id,jdbcType=BIGINT}, #{merchantNumber,jdbcType=VARCHAR}, #{parentCityMerchantId,jdbcType=BIGINT}, 
+      #{createDateTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, 
+      #{invalid,jdbcType=TINYINT}, #{adminId,jdbcType=BIGINT}, #{cityMerchantName,jdbcType=VARCHAR}, 
+      #{cityMerchantAddress,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{bankNumber,jdbcType=VARCHAR}, 
+      #{bankAddress,jdbcType=VARCHAR}, #{linkMan,jdbcType=VARCHAR}, #{identityCard,jdbcType=VARCHAR}, 
+      #{linkTel,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, #{money,jdbcType=REAL}, 
+      #{lowestMoney,jdbcType=REAL}, #{level,jdbcType=TINYINT},
+      #{areaProfit,jdbcType=REAL},#{fixateProfit,jdbcType=REAL},
+      #{firstGoodsMoney,jdbcType=REAL},#{firstGoodsMoneyBalance,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ibaixiong.entity.SsssCityMerchant" >
+    insert into tbl_ssss_city_merchant
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="merchantNumber != null" >
+        merchant_number,
+      </if>
+      <if test="parentCityMerchantId != null" >
+        parent_city_merchant_id,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="invalid != null" >
+        invalid,
+      </if>
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+      <if test="cityMerchantName != null" >
+        city_merchant_name,
+      </if>
+      <if test="cityMerchantAddress != null" >
+        city_merchant_address,
+      </if>
+      <if test="bankName != null" >
+        bank_name,
+      </if>
+      <if test="bankNumber != null" >
+        bank_number,
+      </if>
+      <if test="bankAddress != null" >
+        bank_address,
+      </if>
+      <if test="linkMan != null" >
+        link_man,
+      </if>
+      <if test="identityCard != null" >
+        identity_card,
+      </if>
+      <if test="linkTel != null" >
+        link_tel,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="lowestMoney != null" >
+        lowest_money,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="freezedMoney != null" >
+        freezed_money,
+      </if>
+      <if test="areaProfit != null" >
+        area_profit,
+      </if>
+      <if test="fixateProfit != null" >
+        fixate_profit,
+      </if>
+      <if test="firstGoodsMoney != null" >
+        first_goods_money,
+      </if>
+      <if test="firstGoodsMoneyBalance != null" >
+        first_goods_money_balance,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="merchantNumber != null" >
+        #{merchantNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCityMerchantId != null" >
+        #{parentCityMerchantId,jdbcType=BIGINT},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="invalid != null" >
+        #{invalid,jdbcType=TINYINT},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=BIGINT},
+      </if>
+      <if test="cityMerchantName != null" >
+        #{cityMerchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityMerchantAddress != null" >
+        #{cityMerchantAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNumber != null" >
+        #{bankNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAddress != null" >
+        #{bankAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="linkMan != null" >
+        #{linkMan,jdbcType=VARCHAR},
+      </if>
+      <if test="identityCard != null" >
+        #{identityCard,jdbcType=VARCHAR},
+      </if>
+      <if test="linkTel != null" >
+        #{linkTel,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=REAL},
+      </if>
+      <if test="lowestMoney != null" >
+        #{lowestMoney,jdbcType=REAL},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=TINYINT},
+      </if>
+      <if test="freezedMoney != null" >
+        #{freezedMoney,jdbcType=REAL},
+      </if>
+      <if test="areaProfit != null" >
+        #{areaProfit,jdbcType=REAL},
+      </if>
+      <if test="fixateProfit != null" >
+       #{fixateProfit,jdbcType=REAL},
+      </if>
+      <if test="firstGoodsMoney != null" >
+        #{firstGoodsMoney,jdbcType=REAL},
+      </if>
+      <if test="firstGoodsMoneyBalance != null" >
+        #{firstGoodsMoneyBalance,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ibaixiong.entity.SsssCityMerchant" >
+    update tbl_ssss_city_merchant
+    <set >
+      <if test="merchantNumber != null" >
+        merchant_number = #{merchantNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCityMerchantId != null" >
+        parent_city_merchant_id = #{parentCityMerchantId,jdbcType=BIGINT},
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="invalid != null" >
+        invalid = #{invalid,jdbcType=TINYINT},
+      </if>
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=BIGINT},
+      </if>
+      <if test="cityMerchantName != null" >
+        city_merchant_name = #{cityMerchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityMerchantAddress != null" >
+        city_merchant_address = #{cityMerchantAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNumber != null" >
+        bank_number = #{bankNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAddress != null" >
+        bank_address = #{bankAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="linkMan != null" >
+        link_man = #{linkMan,jdbcType=VARCHAR},
+      </if>
+      <if test="identityCard != null" >
+        identity_card = #{identityCard,jdbcType=VARCHAR},
+      </if>
+      <if test="linkTel != null" >
+        link_tel = #{linkTel,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=REAL},
+      </if>
+      <if test="lowestMoney != null" >
+        lowest_money = #{lowestMoney,jdbcType=REAL},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=TINYINT},
+      </if>
+      <if test="freezedMoney != null" >
+        freezed_money = #{freezedMoney,jdbcType=REAL},
+      </if>
+      <if test="areaProfit != null" >
+        area_profit=#{areaProfit,jdbcType=REAL},
+      </if>
+      <if test="fixateProfit != null" >
+       fixate_profit=#{fixateProfit,jdbcType=REAL},
+      </if>
+      <if test="firstGoodsMoney != null" >
+        first_goods_money=fixate_profit= #{firstGoodsMoney,jdbcType=REAL},
+      </if>
+      <if test="firstGoodsMoneyBalance != null" >
+        first_goods_money_balance=#{firstGoodsMoneyBalance,jdbcType=REAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ibaixiong.entity.SsssCityMerchant" >
+    update tbl_ssss_city_merchant
+    set merchant_number = #{merchantNumber,jdbcType=VARCHAR},
+      parent_city_merchant_id = #{parentCityMerchantId,jdbcType=BIGINT},
+      create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      invalid = #{invalid,jdbcType=TINYINT},
+      admin_id = #{adminId,jdbcType=BIGINT},
+      city_merchant_name = #{cityMerchantName,jdbcType=VARCHAR},
+      city_merchant_address = #{cityMerchantAddress,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      bank_number = #{bankNumber,jdbcType=VARCHAR},
+      bank_address = #{bankAddress,jdbcType=VARCHAR},
+      link_man = #{linkMan,jdbcType=VARCHAR},
+      identity_card = #{identityCard,jdbcType=VARCHAR},
+      link_tel = #{linkTel,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      money = #{money,jdbcType=REAL},
+      lowest_money = #{lowestMoney,jdbcType=REAL},
+      level = #{level,jdbcType=TINYINT},
+      area_profit=#{areaProfit,jdbcType=REAL},
+      fixate_profit=#{fixateProfit,jdbcType=REAL},
+      first_goods_money=fixate_profit= #{firstGoodsMoney,jdbcType=REAL},
+      first_goods_money_balance=#{firstGoodsMoneyBalance,jdbcType=REAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

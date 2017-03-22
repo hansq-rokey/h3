@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ibaixiong.dao.MerchantProductProfitDao" >
+  <resultMap id="BaseResultMap" type="com.ibaixiong.entity.MerchantProductProfit" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="merchant_id" property="merchantId" jdbcType="BIGINT" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, merchant_id, product_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_merchant_product_profit
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getByIds" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from tbl_merchant_product_profit 
+  	where merchant_id = #{merchantId,jdbcType=BIGINT} and product_id=#{productId,jdbcType=BIGINT}
+  </select>
+  <select id="queryList" resultMap="BaseResultMap" parameterType="java.lang.Long">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from tbl_merchant_product_profit 
+  	where merchant_id = #{merchantId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_merchant_product_profit
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByMerchantId" parameterType="java.lang.Long" >
+    delete from tbl_merchant_product_profit
+    where merchant_id = #{merchantId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ibaixiong.entity.MerchantProductProfit" >
+    insert into tbl_merchant_product_profit (id, merchant_id, product_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{merchantId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ibaixiong.entity.MerchantProductProfit" >
+    insert into tbl_merchant_product_profit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="merchantId != null" >
+        merchant_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ibaixiong.entity.MerchantProductProfit" >
+    update tbl_merchant_product_profit
+    <set >
+      <if test="merchantId != null" >
+        merchant_id = #{merchantId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ibaixiong.entity.MerchantProductProfit" >
+    update tbl_merchant_product_profit
+    set merchant_id = #{merchantId,jdbcType=BIGINT},
+      product_id = #{productId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
